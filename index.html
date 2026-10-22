@@ -6,186 +6,74 @@
 <title>RUST BINDS by LUCAS</title>
 <meta name="description" content="RUST BINDS by LUCAS — удобные бинды для Rust.">
 <style>
-:root{
-  --bg:#070b0f; --panel:#0d141b; --panel2:#111b24; --line:#1e2b36;
-  --text:#f2f4f5; --muted:#91a0ad; --red:#ff3b30; --red2:#c91f1b;
-  --green:#55d66a; --shadow:0 18px 50px rgba(0,0,0,.35);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:
- radial-gradient(circle at 80% 0%,rgba(255,64,42,.12),transparent 28%),
- radial-gradient(circle at 10% 20%,rgba(255,120,40,.06),transparent 25%),
- var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
-button,input{font:inherit}
-button{cursor:pointer}
-.header{position:sticky;top:0;z-index:20;background:rgba(7,11,15,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.nav{max-width:1400px;margin:auto;min-height:68px;padding:0 22px;display:flex;align-items:center;gap:28px}
-.logo{font-weight:900;font-size:25px;letter-spacing:-1px;white-space:nowrap}
-.logo span{color:var(--red)}
-.logo small{font-size:17px;font-style:italic;margin-left:5px;color:#fff}
-.navlinks{display:flex;gap:6px;flex:1}
-.navlinks button{background:none;border:0;color:#b9c3ca;padding:12px 13px;border-radius:9px}
-.navlinks button:hover,.navlinks button.active{background:#151e26;color:#fff}
-.favtop{border:1px solid var(--line);background:#0e171f;color:#fff;padding:10px 14px;border-radius:10px}
-.hero{max-width:1400px;margin:auto;padding:60px 22px 38px;position:relative;overflow:hidden}
-.hero:before{content:"";position:absolute;inset:0;background:
- linear-gradient(90deg,rgba(7,11,15,.98),rgba(7,11,15,.62),rgba(7,11,15,.92)),
- linear-gradient(135deg,#3b1512,#17232c 50%,#32120e);opacity:.95;z-index:-1}
-.hero h1{font-size:clamp(45px,7vw,88px);line-height:.9;margin:0 0 20px;letter-spacing:-4px}
-.hero h1 span{color:var(--red)}
-.hero h1 em{font-size:.42em;color:#fff;letter-spacing:-1px}
-.hero p{max-width:680px;color:#c2cbd1;font-size:18px;line-height:1.55}
-.hero .tag{display:inline-block;background:rgba(255,59,48,.12);border:1px solid rgba(255,59,48,.35);color:#ff756d;padding:7px 11px;border-radius:999px;font-size:13px;font-weight:700}
-.container{max-width:1400px;margin:auto;padding:0 22px 50px}
-.search{display:flex;gap:10px;margin:5px 0 15px}
-.search input{flex:1;background:#0c151d;border:1px solid var(--line);color:#fff;border-radius:12px;padding:16px 18px;outline:none}
-.search input:focus{border-color:#6b3430}
-.clear{background:#171f27;color:#fff;border:1px solid var(--line);border-radius:12px;padding:0 18px}
-.filters{display:flex;gap:9px;overflow:auto;padding-bottom:18px}
-.filters button{white-space:nowrap;background:#0c151d;border:1px solid var(--line);color:#bac4cb;border-radius:10px;padding:11px 15px}
-.filters button.active{background:var(--red);border-color:var(--red);color:#fff}
-.layout{display:grid;grid-template-columns:1fr 290px;gap:18px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
-.card{background:linear-gradient(180deg,#0e171f,#0a1117);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:260px}
-.card-top{display:flex;justify-content:space-between;gap:10px}
-.icon{font-size:28px}.badge{font-size:11px;padding:6px 8px;border-radius:7px;background:#311018;color:#ff8c86;height:max-content}
-.card h3{margin:12px 0 7px;font-size:18px}.desc{color:#9eabb4;line-height:1.45;font-size:14px;min-height:42px}
-.key{margin:12px 0;color:#a9b5bd;font-size:13px}.key b{display:inline-block;background:#26333d;color:#fff;padding:5px 9px;border-radius:6px;margin-left:5px}
-.code{display:block;background:#091017;border:1px solid #17242e;color:#d8e0e5;border-radius:8px;padding:10px;font-family:monospace;font-size:12px;overflow:auto;white-space:nowrap}
-.actions{display:flex;gap:8px;margin-top:auto;padding-top:13px}
-.copy{flex:1;background:var(--red);border:0;color:#fff;border-radius:9px;padding:11px;font-weight:800}
-.copy:hover{background:#ff4e44}.heart{width:44px;border:1px solid var(--line);background:#111a22;color:#9eabb4;border-radius:9px;font-size:19px}.heart.on{color:#ff4d45}
-.sidebar{display:flex;flex-direction:column;gap:15px}.side{background:#0d151d;border:1px solid var(--line);border-radius:14px;padding:18px}
-.side h3{margin:0 0 10px}.side p{color:#8f9ca5;line-height:1.5;font-size:14px}
-.steps{padding:0;margin:12px 0;list-style:none}.steps li{display:flex;gap:10px;margin:12px 0;color:#c3cbd0;font-size:14px}.num{min-width:24px;height:24px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-weight:800;font-size:12px}
-.notice{border:1px solid #7e332e;background:#211211;border-radius:10px;padding:13px;color:#d5b0ad;font-size:13px;line-height:1.45}
-.empty{grid-column:1/-1;text-align:center;padding:55px 15px;color:#8f9ca5;border:1px dashed var(--line);border-radius:14px}
-.footer{border-top:1px solid var(--line);padding:25px 22px;color:#78858f;text-align:center}.footer b{color:#fff}.toast{position:fixed;right:20px;bottom:20px;background:#14211a;border:1px solid #2d6e3a;color:#bff1c7;padding:12px 15px;border-radius:10px;transform:translateY(120px);transition:.25s;z-index:50}.toast.show{transform:none}
-@media(max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr}.navlinks{display:none}}
-@media(max-width:650px){.nav{padding:0 14px}.hero,.container{padding-left:14px;padding-right:14px}.hero{padding-top:42px}.hero h1{letter-spacing:-2px}.grid{grid-template-columns:1fr}.sidebar{display:flex}.favtop{margin-left:auto}.logo{font-size:21px}.logo small{font-size:14px}}
+:root{--bg:#070b0f;--panel:#0d141b;--panel2:#111b24;--line:#1e2b36;--text:#f2f4f5;--muted:#91a0ad;--red:#ff3b30;--green:#55d66a;--shadow:0 18px 50px rgba(0,0,0,.35)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% 0%,rgba(255,64,42,.12),transparent 28%),radial-gradient(circle at 10% 20%,rgba(255,120,40,.06),transparent 25%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
+button,input{font:inherit}button{cursor:pointer}.header{position:sticky;top:0;z-index:20;background:rgba(7,11,15,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{max-width:1400px;margin:auto;min-height:68px;padding:0 22px;display:flex;align-items:center;gap:28px}.logo{font-weight:900;font-size:25px;letter-spacing:-1px;white-space:nowrap}.logo span{color:var(--red)}.logo small{font-size:17px;font-style:italic;margin-left:5px;color:#fff}.navlinks{display:flex;gap:6px;flex:1}.navlinks button{background:none;border:0;color:#b9c3ca;padding:12px 13px;border-radius:9px}.navlinks button:hover,.navlinks button.active{background:#151e26;color:#fff}.favtop{border:1px solid var(--line);background:#0e171f;color:#fff;padding:10px 14px;border-radius:10px}
+.hero{max-width:1400px;margin:auto;padding:60px 22px 38px;position:relative;overflow:hidden}.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,11,15,.98),rgba(7,11,15,.62),rgba(7,11,15,.92)),linear-gradient(135deg,#3b1512,#17232c 50%,#32120e);opacity:.95;z-index:-1}.hero h1{font-size:clamp(45px,7vw,88px);line-height:.9;margin:0 0 20px;letter-spacing:-4px}.hero h1 span{color:var(--red)}.hero h1 em{font-size:.42em;color:#fff;letter-spacing:-1px}.hero p{max-width:680px;color:#c2cbd1;font-size:18px;line-height:1.55}.hero .tag{display:inline-block;background:rgba(255,59,48,.12);border:1px solid rgba(255,59,48,.35);color:#ff756d;padding:7px 11px;border-radius:999px;font-size:13px;font-weight:700}
+.container{max-width:1400px;margin:auto;padding:0 22px 50px}.search{display:flex;gap:10px;margin:5px 0 15px}.search input{flex:1;min-width:0;background:#0c151d;border:1px solid var(--line);color:#fff;border-radius:12px;padding:16px 18px;outline:none}.search input:focus{border-color:#6b3430}.clear{background:#171f27;color:#fff;border:1px solid var(--line);border-radius:12px;padding:0 18px}.filters{display:flex;gap:9px;overflow:auto;padding-bottom:18px}.filters button{white-space:nowrap;background:#0c151d;border:1px solid var(--line);color:#bac4cb;border-radius:10px;padding:11px 15px}.filters button.active{background:var(--red);border-color:var(--red);color:#fff}
+.layout{display:grid;grid-template-columns:1fr 290px;gap:18px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.card{background:linear-gradient(180deg,#0e171f,#0a1117);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:260px}.card-top{display:flex;justify-content:space-between;gap:10px}.icon{font-size:28px}.badge{font-size:11px;padding:6px 8px;border-radius:7px;background:#311018;color:#ff8c86;height:max-content}.card h3{margin:12px 0 7px;font-size:18px}.desc{color:#9eabb4;line-height:1.45;font-size:14px;min-height:42px}.key{margin:12px 0;color:#a9b5bd;font-size:13px}.key b{display:inline-block;background:#26333d;color:#fff;padding:5px 9px;border-radius:6px;margin-left:5px}.code{display:block;background:#091017;border:1px solid #17242e;color:#d8e0e5;border-radius:8px;padding:10px;font-family:monospace;font-size:12px;overflow:auto;white-space:nowrap}.actions{display:flex;gap:8px;margin-top:auto;padding-top:13px}.copy{flex:1;background:var(--red);border:0;color:#fff;border-radius:9px;padding:11px;font-weight:800}.copy:hover{background:#ff4e44}.heart{width:44px;border:1px solid var(--line);background:#111a22;color:#9eabb4;border-radius:9px;font-size:19px}.heart.on{color:#ff4d45}
+.sidebar{display:flex;flex-direction:column;gap:15px}.side{background:#0d151d;border:1px solid var(--line);border-radius:14px;padding:18px}.side h3{margin:0 0 10px}.side p{color:#8f9ca5;line-height:1.5;font-size:14px}.steps{padding:0;margin:12px 0;list-style:none}.steps li{display:flex;gap:10px;margin:12px 0;color:#c3cbd0;font-size:14px}.num{min-width:24px;height:24px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-weight:800;font-size:12px}.notice{border:1px solid #7e332e;background:#211211;border-radius:10px;padding:13px;color:#d5b0ad;font-size:13px;line-height:1.45}.empty{grid-column:1/-1;text-align:center;padding:55px 15px;color:#8f9ca5;border:1px dashed var(--line);border-radius:14px}.footer{border-top:1px solid var(--line);padding:25px 22px;color:#78858f;text-align:center}.footer b{color:#fff}.toast{position:fixed;right:20px;bottom:20px;background:#14211a;border:1px solid #2d6e3a;color:#bff1c7;padding:12px 15px;border-radius:10px;transform:translateY(120px);transition:.25s;z-index:50}.toast.show{transform:none}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr}.navlinks{display:none}}@media(max-width:650px){.nav{padding:0 14px}.hero,.container{padding-left:14px;padding-right:14px}.hero{padding-top:42px}.hero h1{letter-spacing:-2px}.grid{grid-template-columns:1fr}.sidebar{display:flex}.favtop{margin-left:auto}.logo{font-size:21px}.logo small{font-size:14px}}
 </style>
 </head>
 <body>
-<header class="header">
-  <nav class="nav">
-    <div class="logo">RUST <span>BINDS</span><small>by LUCAS</small></div>
-    <div class="navlinks">
-      <button class="active" onclick="scrollTo({top:0,behavior:'smooth'})">⌂ Главная</button>
-      <button onclick="setCategory('Оружие')">🔫 Оружие</button>
-      <button onclick="setCategory('Строительство')">🔨 Строительство</button>
-      <button onclick="setCategory('Инвентарь')">🎒 Инвентарь</button>
-      <button onclick="setCategory('Транспорт')">🚗 Транспорт</button>
-      <button onclick="setCategory('Удобные')">⚡ Удобные</button>
-    </div>
-    <button class="favtop" onclick="showFavorites()">♥ Избранное <span id="favCount">0</span></button>
-  </nav>
-</header>
-
-<section class="hero">
-  <span class="tag">RUST BINDS • BY LUCAS</span>
-  <h1>RUST <span>BINDS</span> <em>by LUCAS</em></h1>
-  <p>Удобные бинды для Rust — найди нужную команду, скопируй её одним нажатием и настрой игру под себя.</p>
-</section>
-
+<header class="header"><nav class="nav">
+<div class="logo">RUST <span>BINDS</span><small>by LUCAS</small></div>
+<div class="navlinks"><button class="active" onclick="scrollTo({top:0,behavior:'smooth'})">⌂ Главная</button><button onclick="setCategory('Оружие')">🔫 Оружие</button><button onclick="setCategory('Строительство')">🔨 Строительство</button><button onclick="setCategory('Инвентарь')">🎒 Инвентарь</button><button onclick="setCategory('Транспорт')">🚗 Транспорт</button><button onclick="setCategory('Удобные')">⚡ Удобные</button></div>
+<button class="favtop" onclick="showFavorites()">♥ Избранное <span id="favCount">0</span></button>
+</nav></header>
+<section class="hero"><span class="tag">RUST BINDS • BY LUCAS</span><h1>RUST <span>BINDS</span> <em>by LUCAS</em></h1><p>База полезных биндов Rust: поиск, категории, избранное и копирование команд в один тап. Команды для обычных и модифицированных серверов отмечены отдельно.</p></section>
 <main class="container">
-  <div class="search">
-    <input id="search" placeholder="🔎  Поиск по биндам..." oninput="render()">
-    <button class="clear" onclick="document.getElementById('search').value='';render()">Очистить</button>
-  </div>
-
-  <div class="filters" id="filters">
-    <button class="active" data-cat="Все" onclick="setCategory('Все')">▦ Все</button>
-    <button data-cat="Оружие" onclick="setCategory('Оружие')">🔫 Оружие</button>
-    <button data-cat="Строительство" onclick="setCategory('Строительство')">🔨 Строительство</button>
-    <button data-cat="Инвентарь" onclick="setCategory('Инвентарь')">🎒 Инвентарь</button>
-    <button data-cat="Транспорт" onclick="setCategory('Транспорт')">🚗 Транспорт</button>
-    <button data-cat="Удобные" onclick="setCategory('Удобные')">⚡ Удобные</button>
-  </div>
-
-  <div class="layout">
-    <section class="grid" id="grid"></section>
-    <aside class="sidebar">
-      <div class="side">
-        <h3>♥ Избранные бинды <span id="sideCount">0</span></h3>
-        <p id="favText">Добавляй полезные бинды в избранное, чтобы быстро находить их.</p>
-      </div>
-      <div class="side">
-        <h3>📖 Как использовать?</h3>
-        <ol class="steps">
-          <li><span class="num">1</span>Выбери нужный бинд.</li>
-          <li><span class="num">2</span>Нажми «Копировать».</li>
-          <li><span class="num">3</span>Открой консоль Rust.</li>
-          <li><span class="num">4</span>Вставь команду и проверь её.</li>
-        </ol>
-        <div class="notice">⚠️ Команды Rust могут меняться после обновлений. Перед публикацией проверь каждый бинд на актуальной версии игры.</div>
-      </div>
-    </aside>
-  </div>
-</main>
-
-<footer class="footer"><b>RUST BINDS by LUCAS</b> — первая версия сайта • Сделано для игроков Rust</footer>
-<div class="toast" id="toast">✓ Бинд скопирован</div>
-
+<div class="search"><input id="search" placeholder="🔎  Поиск по биндам..." oninput="render()"><button class="clear" onclick="document.getElementById('search').value='';render()">Очистить</button></div>
+<div class="filters" id="filters"><button class="active" data-cat="Все" onclick="setCategory('Все')">▦ Все</button><button data-cat="Оружие" onclick="setCategory('Оружие')">🔫 Оружие</button><button data-cat="Строительство" onclick="setCategory('Строительство')">🔨 Строительство</button><button data-cat="Инвентарь" onclick="setCategory('Инвентарь')">🎒 Инвентарь</button><button data-cat="Транспорт" onclick="setCategory('Транспорт')">🚗 Транспорт</button><button data-cat="Удобные" onclick="setCategory('Удобные')">⚡ Удобные</button><button data-cat="Передвижение" onclick="setCategory('Передвижение')">🏃 Передвижение</button><button data-cat="Рейд" onclick="setCategory('Рейд')">💥 Рейд</button><button data-cat="Другое" onclick="setCategory('Другое')">🧰 Другое</button></div>
+<div class="layout"><section class="grid" id="grid"></section><aside class="sidebar">
+<div class="side"><h3>♥ Избранные бинды <span id="sideCount">0</span></h3><p id="favText">Добавляй полезные бинды в избранное, чтобы быстро находить их.</p></div>
+<div class="side"><h3>📖 Как использовать?</h3><ol class="steps"><li><span class="num">1</span>Выбери нужный бинд.</li><li><span class="num">2</span>Нажми «Копировать».</li><li><span class="num">3</span>Открой консоль Rust.</li><li><span class="num">4</span>Вставь команду и проверь её.</li></ol><div class="notice">⚠️ Команды Rust могут меняться после обновлений. Проверь каждый бинд на актуальной версии игры. Бинды с пометкой Modded работают только на серверах с нужными плагинами. Команды с одинаковыми клавишами конфликтуют: проверь свою раскладку перед применением.</div></div>
+</aside></div></main>
+<footer class="footer"><b>RUST BINDS by LUCAS</b> — обновлённая версия сайта • Сделано для игроков Rust</footer><div class="toast" id="toast">✓ Бинд скопирован</div>
 <script>
 const binds = [
- {id:1,cat:'Удобные',icon:'🏃',title:'Автобег',desc:'Пример удобного бинда для быстрого управления движением.',key:'Z',code:'bind z forward;sprint'},
- {id:2,cat:'Оружие',icon:'🎯',title:'Быстрая смена оружия',desc:'Быстрый доступ к слоту оружия с одной клавиши.',key:'1',code:'bind 1 slot1'},
- {id:3,cat:'Строительство',icon:'🔨',title:'Быстрое строительство',desc:'Пример бинда для быстрого выбора строительного элемента.',key:'F1',code:'bind f1 building.block'},
- {id:4,cat:'Инвентарь',icon:'🎒',title:'Быстрый доступ к инвентарю',desc:'Удобная клавиша для открытия инвентаря.',key:'TAB',code:'bind tab inventory.open'},
- {id:5,cat:'Оружие',icon:'🎯',title:'Управление отдачей',desc:'Здесь можно разместить ваш проверенный бинд для управления оружием.',key:'R',code:'bind r recoil'},
- {id:6,cat:'Транспорт',icon:'🚗',title:'Сесть в транспорт',desc:'Карточка для бинда взаимодействия с транспортом.',key:'E',code:'bind e vehicle_enter'},
- {id:7,cat:'Удобные',icon:'⚡',title:'Быстрый фонарь',desc:'Пример карточки для управления фонарём.',key:'L',code:'bind l flashlight.toggle'},
- {id:8,cat:'Оружие',icon:'💣',title:'Быстрая граната',desc:'Карточка для полезной команды с гранатами.',key:'G',code:'bind g grenade'}
+{"id": 1, "cat": "Передвижение", "icon": "🏃", "title": "Автобег (переключатель)", "desc": "Включает движение вперёд и спринт до отмены обычным движением. Проверь удобство на своей раскладке.", "key": "Z", "code": "bind z forward;sprint"},
+{"id": 2, "cat": "Передвижение", "icon": "🏃", "title": "Бег пока держишь клавишу", "desc": "Двигаться вперёд и бежать, пока удерживаешь клавишу.", "key": "X", "code": "bind x +forward;+sprint"},
+{"id": 3, "cat": "Передвижение", "icon": "🧎", "title": "Переключатель приседания", "desc": "Включает приседание; нажми ещё раз или используй стандартное приседание, чтобы отменить.", "key": "Z", "code": "bind z duck"},
+{"id": 4, "cat": "Удобные", "icon": "📋", "title": "Combatlog при открытии консоли", "desc": "При открытии F1 дополнительно показывает боевой лог.", "key": "F1", "code": "bind f1 consoletoggle;combatlog"},
+{"id": 5, "cat": "Удобные", "icon": "📊", "title": "Показать FPS", "desc": "Показывает счётчик производительности. Команда может отличаться по версиям.", "key": "F2", "code": "bind f2 perf 1"},
+{"id": 6, "cat": "Удобные", "icon": "📡", "title": "Показать ping", "desc": "Выводит информацию о задержке соединения.", "key": "F3", "code": "bind f3 ping"},
+{"id": 7, "cat": "Удобные", "icon": "🚪", "title": "Отключиться от сервера", "desc": "Отключает от текущего сервера. Используй отдельную клавишу, чтобы не нажать случайно.", "key": "F10", "code": "bind f10 client.disconnect"},
+{"id": 8, "cat": "Удобные", "icon": "☠️", "title": "Самоубийство", "desc": "Отправляет персонажа на экран возрождения. Не ставь на часто используемую клавишу.", "key": "K", "code": "bind k kill"},
+{"id": 9, "cat": "Удобные", "icon": "💬", "title": "Сообщение в общий чат", "desc": "Отправляет заданный текст в общий чат. Замени текст в кавычках на свой.", "key": "7", "code": "bind 7 chat.say \"Привет всем!\""},
+{"id": 10, "cat": "Удобные", "icon": "👥", "title": "Сообщение в командный чат", "desc": "Отправляет заданный текст только в чат команды.", "key": "8", "code": "bind 8 chat.teamsay \"Я здесь\""},
+{"id": 11, "cat": "Инвентарь", "icon": "🩹", "title": "Создать бинт в очереди", "desc": "Добавляет один бинт в очередь крафта. Требуется доступность рецепта и ресурсов.", "key": "H", "code": "bind h \"craft.add -2072273936 1\""},
+{"id": 12, "cat": "Инвентарь", "icon": "🩹", "title": "Создать 2 бинта при прокрутке вверх", "desc": "Добавляет два бинта в очередь крафта при прокрутке колеса вверх. Может мешать выбору предметов.", "key": "Колесо вверх", "code": "bind mousewheelup \"craft.add -2072273936 2\""},
+{"id": 13, "cat": "Оружие", "icon": "🔦", "title": "Фонарик/лазер при прицеливании", "desc": "Включает фонарь или лазер вместе с прицеливанием. Проверь, не конфликтует ли с текущими действиями мыши.", "key": "Mouse 1", "code": "bind mouse1 +lighttoggle;+attack2"},
+{"id": 14, "cat": "Оружие", "icon": "🎯", "title": "Прицеливание с настройкой чувствительности", "desc": "Пример из справочника Rust: меняет чувствительность при действиях мыши. Проверь значения и поведение перед игрой.", "key": "Mouse 1", "code": "bind mouse1 \"+attack2;+input.sensitivity .45;input.sensitivity .2\""},
+{"id": 15, "cat": "Оружие", "icon": "🖱️", "title": "Автоатака (осторожно)", "desc": "Повторяет атаку после нажатия и может мешать обычному управлению. Не используйте, если не понимаете поведение команды.", "key": "Shift+F11", "code": "bind [leftshift+f11] attack"},
+{"id": 16, "cat": "Удобные", "icon": "🧍", "title": "Автоатака + приседание", "desc": "Команда из справочника Rust. Проверь на безопасном сервере и не назначай на обычную игровую клавишу.", "key": "Right Shift+F11", "code": "bind [rightshift+f11] attack;duck"},
+{"id": 17, "cat": "Удобные", "icon": "🎮", "title": "Быстрый alt-look", "desc": "Пример бинда для осмотра вокруг персонажа; назначь удобную клавишу.", "key": "C", "code": "bind c +altlook"},
+{"id": 18, "cat": "Другое", "icon": "🗺️", "title": "Открыть карту (зависит от версии/сервера)", "desc": "В некоторых версиях или конфигурациях может работать команда карты. Если не работает, удали бинд командой bind m.", "key": "M", "code": "bind m map.open"},
+{"id": 19, "cat": "Другое", "icon": "🔄", "title": "Сбросить привязку клавиши", "desc": "Введи команду без второго параметра, чтобы посмотреть текущую привязку клавиши. Для изменения назначь новую команду.", "key": "Любая", "code": "bind z"},
+{"id": 20, "cat": "Другое", "icon": "🧰", "title": "Открыть чат-команду /home (Modded)", "desc": "Только для модифицированных серверов с плагином домов. Замени home-команду под свой сервер.", "key": "H", "code": "bind h chat.say /home"},
+{"id": 21, "cat": "Другое", "icon": "🤝", "title": "Запрос телепорта (Modded)", "desc": "Только если на сервере есть соответствующий плагин телепорта.", "key": "J", "code": "bind j chat.say /tpa"},
+{"id": 22, "cat": "Другое", "icon": "🎒", "title": "Открыть рюкзак (Modded)", "desc": "Работает только на серверах с плагином рюкзака, поддерживающим backpack.open.", "key": "F2", "code": "bind f2 backpack.open"},
+{"id": 23, "cat": "Другое", "icon": "🧱", "title": "Режим удаления построек (Modded)", "desc": "Только на серверах, где есть плагин удаления построек. Команда зависит от плагина.", "key": "Z", "code": "bind z chat.say /remove"},
+{"id": 24, "cat": "Транспорт", "icon": "🐎", "title": "Остановить лошадь (Modded)", "desc": "Пример команды для серверов с плагином лошадей; работает только если сервер поддерживает /stophorse.", "key": "X", "code": "bind x chat.say /stophorse"},
+{"id": 25, "cat": "Удобные", "icon": "💡", "title": "Включить фонарь/лазер", "desc": "Переключает фонарь, лазер или некоторые источники света в зависимости от предмета.", "key": "L", "code": "bind l lighttoggle"},
+{"id": 26, "cat": "Другое", "icon": "🚪", "title": "Закрыть игру", "desc": "Полностью закрывает Rust. Используй только если действительно хочешь выйти.", "key": "F12", "code": "bind f12 quit"},
+{"id": 27, "cat": "Другое", "icon": "🧪", "title": "Открыть консоль и combatlog", "desc": "Альтернативный пример: открывает F1 и показывает combatlog.", "key": "F1", "code": "bind f1 consoletoggle;combatlog"},
+{"id": 28, "cat": "Другое", "icon": "🔨", "title": "Команда жеста (пример)", "desc": "Запускает жест. Проверь доступные имена жестов в своей версии игры.", "key": "J", "code": "bind j gesture wave"},
+{"id": 29, "cat": "Другое", "icon": "🛠️", "title": "Сохранить настройки биндов", "desc": "Записывает текущие настройки и бинды в конфигурацию игры.", "key": "В консоль F1", "code": "writecfg"},
+{"id": 30, "cat": "Другое", "icon": "🧹", "title": "Отключиться от сервера (альтернатива)", "desc": "Команда для отключения от сервера. Выбери клавишу, которую не нажимаешь случайно.", "key": "P", "code": "bind p disconnect"}
 ];
-let category='Все';
-let favorites=JSON.parse(localStorage.getItem('rustLucasFavs')||'[]');
+let category='Все'; let favorites=JSON.parse(localStorage.getItem('rustLucasFavs')||'[]');
 function setCategory(c){category=c;document.querySelectorAll('#filters button').forEach(b=>b.classList.toggle('active',b.dataset.cat===c));render()}
-function render(){
- const q=document.getElementById('search').value.toLowerCase().trim();
- const list=binds.filter(b=>(category==='Все'||b.cat===category)&&(b.title+' '+b.desc+' '+b.code+' '+b.key).toLowerCase().includes(q));
- const grid=document.getElementById('grid');
- grid.innerHTML=list.length?list.map(card).join('<div style="display:none"></div>'):'<div class="empty">😕 Ничего не найдено.<br>Попробуй другой запрос или категорию.</div>';
- updateCounts();
-}
-function card(b){
- const on=favorites.includes(b.id);
- return `<article class="card">
-  <div class="card-top"><span class="icon">${b.icon}</span><span class="badge">${b.cat}</span></div>
-  <h3>${b.title}</h3><div class="desc">${b.desc}</div>
-  <div class="key">Клавиша:<b>${b.key}</b></div>
-  <code class="code">${escapeHtml(b.code)}</code>
-  <div class="actions">
-    <button class="copy" onclick="copyBind(${b.id})">▣ Копировать</button>
-    <button class="heart ${on?'on':''}" title="Избранное" onclick="toggleFav(${b.id})">${on?'♥':'♡'}</button>
-  </div>
- </article>`;
-}
+function render(){const q=document.getElementById('search').value.toLowerCase().trim();const list=binds.filter(b=>(category==='Все'||b.cat===category)&&(b.title+' '+b.desc+' '+b.code+' '+b.key).toLowerCase().includes(q));document.getElementById('grid').innerHTML=list.length?list.map(card).join(''):'<div class="empty">😕 Ничего не найдено.<br>Попробуй другой запрос или категорию.</div>';updateCounts()}
+function card(b){const on=favorites.includes(b.id);return `<article class="card"><div class="card-top"><span class="icon">${b.icon}</span><span class="badge">${b.cat}</span></div><h3>${b.title}</h3><div class="desc">${b.desc}</div><div class="key">Клавиша:<b>${b.key}</b></div><code class="code">${escapeHtml(b.code)}</code><div class="actions"><button class="copy" onclick="copyBind(${b.id})">▣ Копировать</button><button class="heart ${on?'on':''}" title="Избранное" onclick="toggleFav(${b.id})">${on?'♥':'♡'}</button></div></article>`}
 function escapeHtml(s){return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')}
-function copyBind(id){
- const b=binds.find(x=>x.id===id);
- navigator.clipboard.writeText(b.code).then(()=>toast('✓ Бинд скопирован')).catch(()=>toast('Скопируй команду вручную'));
-}
-function toggleFav(id){
- favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];
- localStorage.setItem('rustLucasFavs',JSON.stringify(favorites));render();
-}
-function updateCounts(){
- document.getElementById('favCount').textContent=favorites.length;
- document.getElementById('sideCount').textContent=favorites.length;
- document.getElementById('favText').textContent=favorites.length?`В избранном ${favorites.length} ${favorites.length===1?'бид':'биндов'}.`:'Добавляй полезные бинды в избранное, чтобы быстро находить их.';
-}
-function showFavorites(){
- if(!favorites.length){toast('В избранном пока ничего нет');return}
- document.getElementById('search').value='';
- category='Все';
- document.querySelectorAll('#filters button').forEach(b=>b.classList.toggle('active',b.dataset.cat==='Все'));
- const old=binds.filter(b=>favorites.includes(b.id));
- document.getElementById('grid').innerHTML=old.map(card).join('');
- updateCounts();
-}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function copyBind(id){const b=binds.find(x=>x.id===id);if(b.code.includes('<button>')){toast('Замени <button> на нужную клавишу перед использованием');return}navigator.clipboard.writeText(b.code).then(()=>toast('✓ Бинд скопирован')).catch(()=>toast('Скопируй команду вручную'))}
+function toggleFav(id){favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem('rustLucasFavs',JSON.stringify(favorites));render()}
+function updateCounts(){document.getElementById('favCount').textContent=favorites.length;document.getElementById('sideCount').textContent=favorites.length;document.getElementById('favText').textContent=favorites.length?`В избранном ${favorites.length} биндов.`:'Добавляй полезные бинды в избранное, чтобы быстро находить их.'}
+function showFavorites(){if(!favorites.length){toast('В избранном пока ничего нет');return}document.getElementById('search').value='';category='Все';document.querySelectorAll('#filters button').forEach(b=>b.classList.toggle('active',b.dataset.cat==='Все'));document.getElementById('grid').innerHTML=binds.filter(b=>favorites.includes(b.id)).map(card).join('');updateCounts()}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
 render();
-</script>
-</body>
-</html>
+</script></body></html>
