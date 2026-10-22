@@ -173,4 +173,60 @@ function updateCounts(){document.getElementById('favCount').textContent=favorite
 function showFavorites(){if(!favorites.length){toast('В избранном пока ничего нет');return}document.getElementById('search').value='';category='Все';document.querySelectorAll('#filters button').forEach(b=>b.classList.toggle('active',b.dataset.cat==='Все'));document.getElementById('grid').innerHTML=binds.filter(b=>favorites.includes(b.id)).map(card).join('');updateCounts()}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
 render();
-</script></body></html>
+</script></body></html> 
+<!-- Блок поддержки RUST BINDS BY LUCAS -->
+<section id="support">
+  <h2>Нужна помощь?</h2>
+  <p>
+    Нашёл ошибку в биндах или есть идеи
+    для улучшения сайта? Напиши мне!
+  </p>
+  <a
+    href="https://t.me/LucasUsaLa"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="support-button"
+  >
+    ✈ Написать в Telegram
+  </a>
+</section>
+
+<style>
+  #support {
+    margin: 40px auto 20px;
+    padding: 30px 20px;
+    max-width: 700px;
+    text-align: center;
+    background: #101713;
+    border: 1px solid #294735;
+    border-radius: 18px;
+    color: #ffffff;
+  }
+
+  #support h2 {
+    color: #b9f6ca;
+    margin-bottom: 12px;
+  }
+
+  #support p {
+    color: #cbd5ce;
+    line-height: 1.6;
+  }
+
+  .support-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 14px 22px;
+    background: #229ed9;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: 0.2s;
+  }
+
+  .support-button:hover {
+    background: #168ac0;
+    transform: translateY(-2px);
+  }
+</style>
